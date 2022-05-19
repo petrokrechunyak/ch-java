@@ -19,18 +19,18 @@ public class ChatUser {
 
     @Id
     @GeneratedValue
-    UUID id;
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    User user;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "chat_id")
-    Chat chat;
+    private Chat chat;
 
     @OneToMany(mappedBy = "chatUser")
-    Set<Message> messages;
+    private Set<Message> messages;
 
     public ChatUser(User user, Chat chat) {
         this.user = user;

@@ -23,7 +23,7 @@ public abstract class AbstractDao<T>{
     }
 
     public List<T> findAll(){
-        return getSession().createQuery("FROM " + genericClass().getName(), genericClass()).list();
+        return getSession().createQuery("FROM " + genericClass().getName(), genericClass()).getResultList();
     }
 
     public T save(T t){
@@ -34,11 +34,6 @@ public abstract class AbstractDao<T>{
     public T update(T t){
         getSession().merge(t);
         return t;
-    }
-
-    public void delete(T t){
-        getSession().delete(t);
-
     }
 
     public void deleteById(UUID id){

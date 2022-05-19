@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@Transactional
 public class ChatUsersServiceImpl implements ChatUserService{
 
     private ChatUserDao chatUserDao;
@@ -18,33 +17,33 @@ public class ChatUsersServiceImpl implements ChatUserService{
         this.chatUserDao = chatUserDao;
     }
 
+    @Transactional
     @Override
     public List<ChatUser> findAll() {
         return chatUserDao.findAll();
     }
 
+    @Transactional
     @Override
     public ChatUser findById(UUID id) {
         return chatUserDao.findById(id);
     }
 
+    @Transactional
     @Override
     public ChatUser save(ChatUser chatUser) {
         chatUserDao.save(chatUser);
         return chatUser;
     }
 
+    @Transactional
     @Override
     public ChatUser update(ChatUser chatUser) {
         chatUserDao.update(chatUser);
         return chatUser;
     }
 
-    @Override
-    public void delete(ChatUser chatUser) {
-        chatUserDao.delete(chatUser);
-    }
-
+    @Transactional
     @Override
     public void deleteById(UUID id) {
         chatUserDao.deleteById(id);

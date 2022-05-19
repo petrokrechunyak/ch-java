@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,15 +13,14 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "chats")
-@NoArgsConstructor
-@Getter
-@Setter
 public class Chat {
+
     @Id
     @GeneratedValue
     private UUID id;
 
-    @Size(min = 5, max = 30, message = "Chat title length can`t be less than 5 or more than 30 symbols")
+    @NotBlank
+    @Size(min = 3, max = 30, message = "Chat title length can`t be less than 3 or more than 30 symbols")
     private String title;
 
     @Column(unique = true)
@@ -42,5 +42,40 @@ public class Chat {
                 ", title='" + title + '\'' +
                 ", code='" + code + '\'' +
                 '}';
+    }
+
+    public Chat() {
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Set<ChatUser> getChatUser() {
+        return chatUser;
+    }
+
+    public void setChatUser(Set<ChatUser> chatUser) {
+        this.chatUser = chatUser;
     }
 }

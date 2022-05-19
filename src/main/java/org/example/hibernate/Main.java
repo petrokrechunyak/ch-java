@@ -1,6 +1,5 @@
 package org.example.hibernate;
 
-import net.bytebuddy.utility.RandomString;
 import org.example.hibernate.config.HibernateConfig;
 import org.example.hibernate.model.Chat;
 import org.example.hibernate.model.ChatUser;
@@ -25,36 +24,6 @@ public class Main {
         ApplicationContext context = new AnnotationConfigApplicationContext(HibernateConfig.class);
         getServices(context);
 
-
-        Chat chat = new Chat("other chat");
-        User user = new User("username1", "password2");
-
-
-        chatUserService.save(new ChatUser(
-                userService.save(user),
-                chatService.save(chat))
-        );
-
-        ChatUser chatUser = new ChatUser(
-                user,
-                chatService.save(new Chat("some title")));
-        chatUserService.save(chatUser);
-
-        ChatUser chatUser_2 = new ChatUser(
-                userService.save(new User("some username", "some password")),
-                chat);
-        chatUserService.save(chatUser_2);
-
-
-        messageService.save(new Message(
-                "some text",
-                chatUser
-        ));
-
-        chatUserService.save(new ChatUser(
-                user,
-                chat
-        ));
     }
 
     private static void getServices(ApplicationContext context){
