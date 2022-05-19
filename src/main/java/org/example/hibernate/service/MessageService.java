@@ -1,6 +1,6 @@
 package org.example.hibernate.service;
 
-import org.example.hibernate.model.Message;
+import org.example.hibernate.DTO.MessageDTO;
 
-public interface MessageService extends BaseService<Message> {
+public interface MessageService extends BaseService<MessageDTO> {
 }

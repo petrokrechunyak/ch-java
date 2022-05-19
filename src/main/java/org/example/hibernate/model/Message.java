@@ -3,10 +3,10 @@ package org.example.hibernate.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 @Table
@@ -18,19 +18,20 @@ public class Message {
 
     @Id
     @GeneratedValue
-    UUID id;
+    private UUID id;
 
-    String message_text;
+    @Column(name = "message_text")
+    private String text;
 
-    LocalDateTime dateTime;
+    private LocalDateTime dateTime;
 
     @ManyToOne
     @JoinColumn(name = "chatUser_id")
-    ChatUser chatUser;
+    private ChatUser chatUser;
 
     public Message(String message_text, ChatUser chatUser) {
         dateTime = LocalDateTime.now();
-        this.message_text = message_text;
+        this.text = message_text;
         this.chatUser = chatUser;
     }
 }
