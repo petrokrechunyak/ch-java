@@ -1,6 +1,8 @@
 package org.example.hibernate.service;
 
 import org.example.hibernate.DAO.UserDao;
+import org.example.hibernate.DTO.UserDTO;
+import org.example.hibernate.mapper.UserMapper;
 import org.example.hibernate.model.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,41 +11,46 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
-    UserDao userDao;
+    private UserDao userDao;
+    private UserMapper userMapper;
 
-    public UserServiceImpl(UserDao userDao){
+    public UserServiceImpl(UserDao userDao, UserMapper userMapper) {
         this.userDao = userDao;
+        this.userMapper = userMapper;
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public List<User> findAll() {
-        return userDao.findAll();
+    public List<UserDTO> findAll() {
+        return userMapper.userToUserDTOList(userDao.findAll());
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public User findById(UUID id) {
-        return userDao.findById(id);
+    public UserDTO findById(UUID id) {
+        User user = userDao.findById(id);
+        return userMapper.userToUserDTO(user);
     }
 
+    @Transactional
     @Override
-    public User save(User user) {
-        return userDao.save(user);
+    public UserDTO save(UserDTO userDTO) {
+        User user = userMapper.userDTOToUser(userDTO);
+        User createdUser = userDao.save(user);
+        return userMapper.userToUserDTO(createdUser);
     }
 
+    @Transactional
     @Override
-    public User update(User user) {
-        return userDao.update(user);
+    public UserDTO update(UserDTO userDTO) {
+        User user = userMapper.userDTOToUser(userDTO);
+        return userMapper.userToUserDTO(userDao.update(user));
     }
 
+    @Transactional
     @Override
-    public void delete(User user) {
-        userDao.delete(user);
-    }
-
-    @Override
-    public void deleteById(UUID id) {
-        userDao.deleteById(id);
+    public UserDTO deleteById(UUID id) {
+       return userMapper.userToUserDTO(userDao.deleteById(id));
     }
 }

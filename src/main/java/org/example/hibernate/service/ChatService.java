@@ -1,13 +1,14 @@
 package org.example.hibernate.service;
 
 import org.example.hibernate.DAO.BaseDao;
-import org.example.hibernate.model.Chat;
+import org.example.hibernate.DTO.ChatDTO;
+import org.example.hibernate.DTO.ChatWithMessagesDTO;
 
 import java.util.UUID;
 
-public interface ChatService extends BaseDao<Chat> {
+public interface ChatService extends BaseDao<ChatDTO> {
 
-    Chat usersByChatId(UUID id);
+    ChatWithMessagesDTO findChatWithMessages(UUID id);
 
-    Chat findByCode(String code);
+    ChatDTO findByCode(String code);
 }

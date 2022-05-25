@@ -5,32 +5,60 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 @Table
 @Entity(name = "messages")
-@NoArgsConstructor
-@Getter
-@Setter
 public class Message {
 
     @Id
     @GeneratedValue
-    UUID id;
+    private UUID id;
 
-    String message_text;
+    @NotBlank
+    @Column(name = "message_text")
+    private String text;
 
-    LocalDateTime dateTime;
+    private LocalDateTime dateTime;
 
     @ManyToOne
     @JoinColumn(name = "chatUser_id")
-    ChatUser chatUser;
+    private ChatUser chatUser;
 
-    public Message(String message_text, ChatUser chatUser) {
-        dateTime = LocalDateTime.now();
-        this.message_text = message_text;
+    public Message() {
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public ChatUser getChatUser() {
+        return chatUser;
+    }
+
+    public void setChatUser(ChatUser chatUser) {
         this.chatUser = chatUser;
     }
 }
