@@ -1,20 +1,12 @@
 package org.example.hibernate.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
 
 @Entity
 @Table(name = "chats_users", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "user_id", "chat_id" })})
-@NoArgsConstructor
-@Getter
-@Setter
+        @UniqueConstraint(columnNames = {"user_id", "chat_id"})})
 public class ChatUser {
 
     @Id
@@ -32,8 +24,35 @@ public class ChatUser {
     @OneToMany(mappedBy = "chatUser")
     private Set<Message> messages;
 
-    public ChatUser(User user, Chat chat) {
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
         this.user = user;
+    }
+
+    public Chat getChat() {
+        return chat;
+    }
+
+    public void setChat(Chat chat) {
         this.chat = chat;
+    }
+
+    public Set<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(Set<Message> messages) {
+        this.messages = messages;
     }
 }

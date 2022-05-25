@@ -23,7 +23,9 @@
         <javax.el.version>3.0.0</javax.el.version>
         <jackson-databind.version>2.13.2.2</jackson-databind.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
-        <tomcat.el.varsion>9.0.62</tomcat.el.varsion>
+        <tomcat-el-api.version>9.0.62</tomcat-el-api.version>
+        <tomcat-embed-core.version>9.0.60</tomcat-embed-core.version>
+        <jsr-310.version>2.13.3</jsr-310.version>
     </properties>
 
     <dependencies>
@@ -79,12 +81,6 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
         </dependency>
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/javax.validation/validation-api &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>javax.validation</groupId>-->
-<!--            <artifactId>validation-api</artifactId>-->
-<!--            <version>2.0.1.Final</version>-->
-<!--        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
         <dependency>
@@ -101,17 +97,14 @@
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-el-api</artifactId>
-            <version>9.0.62</version>
+            <version>${tomcat-el-api.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-el -->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-core</artifactId>
-            <version>9.0.60</version>
+            <version>${tomcat-embed-core.version}</version>
         </dependency>
-
-
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -122,15 +115,17 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>${javax.servlet-api.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jsr-310.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.3.1</version>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -149,5 +144,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

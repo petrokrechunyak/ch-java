@@ -13,42 +13,44 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
     private UserDao userDao;
+    private UserMapper userMapper;
 
-    public UserServiceImpl(UserDao userDao){
+    public UserServiceImpl(UserDao userDao, UserMapper userMapper) {
         this.userDao = userDao;
+        this.userMapper = userMapper;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public List<UserDTO> findAll() {
-        return UserMapper.INSTANCE.userToUserDTOList(userDao.findAll());
+        return userMapper.userToUserDTOList(userDao.findAll());
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public UserDTO findById(UUID id) {
         User user = userDao.findById(id);
-        return UserMapper.INSTANCE.userToUserDTO(user);
+        return userMapper.userToUserDTO(user);
     }
 
     @Transactional
     @Override
     public UserDTO save(UserDTO userDTO) {
-        User user = UserMapper.INSTANCE.userDTOToUser(userDTO);
+        User user = userMapper.userDTOToUser(userDTO);
         User createdUser = userDao.save(user);
-        return UserMapper.INSTANCE.userToUserDTO(createdUser);
+        return userMapper.userToUserDTO(createdUser);
     }
 
     @Transactional
     @Override
     public UserDTO update(UserDTO userDTO) {
-        User user = UserMapper.INSTANCE.userDTOToUser(userDTO);
-        return UserMapper.INSTANCE.userToUserDTO(userDao.update(user));
+        User user = userMapper.userDTOToUser(userDTO);
+        return userMapper.userToUserDTO(userDao.update(user));
     }
 
     @Transactional
     @Override
-    public void deleteById(UUID id) {
-        userDao.deleteById(id);
+    public UserDTO deleteById(UUID id) {
+       return userMapper.userToUserDTO(userDao.deleteById(id));
     }
 }

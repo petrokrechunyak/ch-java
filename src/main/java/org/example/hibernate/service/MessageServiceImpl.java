@@ -16,40 +16,50 @@ import java.util.UUID;
 public class MessageServiceImpl implements MessageService{
 
     private MessageDao messageDao;
+    private MessageMapper messageMapper;
 
-    public MessageServiceImpl(MessageDao messageDao) {
+    public MessageServiceImpl(MessageDao messageDao, MessageMapper messageMapper) {
         this.messageDao = messageDao;
+        this.messageMapper = messageMapper;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<MessageDTO> findAll() {
-        return MessageMapper.INSTANCE.messageToMessageDTOList(messageDao.findAll());
+        return messageMapper.messageToMessageDTOList(messageDao.findAll());
     }
 
+    @Transactional(readOnly = true)
     @Override
     public MessageDTO findById(UUID id) {
         Message message = messageDao.findById(id);
-        return MessageMapper.INSTANCE.messageToMessageDTO(message);
+        return messageMapper.messageToMessageDTO(message);
     }
 
     @Transactional
     @Override
     public MessageDTO save(MessageDTO messageDTO) {
-        Message message = MessageMapper.INSTANCE.messageDTOToMessage(messageDTO);
+        Message message = messageMapper.messageDTOToMessage(messageDTO);
         Message createdMessage = messageDao.save(message);
-        return MessageMapper.INSTANCE.messageToMessageDTO(createdMessage);
+        return messageMapper.messageToMessageDTO(createdMessage);
     }
 
     @Transactional
     @Override
     public MessageDTO update(MessageDTO messageDTO) {
-        Message message = MessageMapper.INSTANCE.messageDTOToMessage(messageDTO);
-        return MessageMapper.INSTANCE.messageToMessageDTO(messageDao.update(message));
+        Message message = messageMapper.messageDTOToMessage(messageDTO);
+        return messageMapper.messageToMessageDTO(messageDao.update(message));
     }
 
     @Transactional
     @Override
-    public void deleteById(UUID id) {
-        messageDao.deleteById(id);
+    public MessageDTO deleteById(UUID id) {
+        return messageMapper.messageToMessageDTO(messageDao.deleteById(id));
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<MessageDTO> findByCode(String code) {
+        return messageMapper.messageToMessageDTOList(messageDao.findByCode(code));
     }
 }

@@ -1,21 +1,29 @@
 package org.example.hibernate.mapper;
 
 import org.example.hibernate.DTO.ChatDTO;
+import org.example.hibernate.DTO.ChatWithMessagesDTO;
 import org.example.hibernate.model.Chat;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 import java.util.List;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface ChatMapper {
 
-    ChatMapper INSTANCE = Mappers.getMapper(ChatMapper.class);
+    ChatDTO chatToChatDTO(Chat Chat);
 
-    ChatDTO ChatToChatDTO(Chat Chat);
+//    @Mappings({
+//            @Mapping(source = "chat.id", target = "id"),
+//            @Mapping(source = "chat.code", target = "code"),
+//            @Mapping(source = "chat.title", target = "titile"),
+//    })
+    ChatWithMessagesDTO chatToChatWithMessagesDTO(ChatDTO chat);
 
-    Chat ChatDTOToChat(ChatDTO ChatDTO);
+    Chat chatDTOToChat(ChatDTO ChatDTO);
 
-    List<ChatDTO> ChatToChatDTOList(List<Chat> ChatList);
+    List<ChatDTO> chatToChatDTOList(List<Chat> ChatList);
+
 
 }

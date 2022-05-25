@@ -1,10 +1,7 @@
 package org.example.hibernate.controller;
 
 import org.example.hibernate.DTO.UserDTO;
-import org.example.hibernate.mapper.UserMapper;
-import org.example.hibernate.model.User;
 import org.example.hibernate.service.UserService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,28 +18,29 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public UserDTO findById(@PathVariable("id") UUID id){
+    public UserDTO findById(@PathVariable("id") UUID id) {
         return userService.findById(id);
     }
 
     @GetMapping
-    public List<UserDTO> findAll(){
+    public List<UserDTO> findAll() {
         return userService.findAll();
     }
 
     @PostMapping
-    public UserDTO save(@RequestBody UserDTO userDTO){
+    public UserDTO save(@RequestBody UserDTO userDTO) {
         return userService.save(userDTO);
     }
 
     @PutMapping
-    public UserDTO update(@RequestBody UserDTO user){
+    public UserDTO update(@RequestBody UserDTO user) {
         return userService.update(user);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@RequestBody UUID id){
+    public void delete(@PathVariable UUID id) {
         userService.deleteById(id);
     }
+
 
 }

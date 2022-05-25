@@ -13,6 +13,5 @@ public interface BaseDao<T> {
 
     T update(T t);
 
-
-    void deleteById(UUID id);
+    T deleteById(UUID id);
 }

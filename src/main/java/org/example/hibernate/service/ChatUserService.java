@@ -1,7 +1,7 @@
 package org.example.hibernate.service;
 
-import org.example.hibernate.model.ChatUser;
+import org.example.hibernate.DTO.ChatUserDTO;
 
-public interface ChatUserService extends BaseService<ChatUser> {
+public interface ChatUserService extends BaseService<ChatUserDTO> {
 
 }

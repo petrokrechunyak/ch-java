@@ -1,8 +1,9 @@
 package org.example.hibernate.DTO;
 
+import java.util.List;
 import java.util.UUID;
 
-public class ChatDTO {
+public class ChatWithMessagesDTO {
 
     private UUID id;
 
@@ -10,8 +11,7 @@ public class ChatDTO {
 
     private String code;
 
-    public ChatDTO() {
-    }
+    private List<MessageDTO> messages;
 
     public UUID getId() {
         return id;
@@ -37,4 +37,11 @@ public class ChatDTO {
         this.code = code;
     }
 
+    public List<MessageDTO> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<MessageDTO> messages) {
+        this.messages = messages;
+    }
 }

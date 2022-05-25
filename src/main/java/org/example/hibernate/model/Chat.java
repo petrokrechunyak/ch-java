@@ -1,9 +1,5 @@
 package org.example.hibernate.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -15,14 +11,13 @@ import java.util.UUID;
 @Table(name = "chats")
 public class Chat {
 
+    public static final int CODE_LENGTH = 10;
     @Id
     @GeneratedValue
     private UUID id;
-
     @NotBlank
     @Size(min = 3, max = 30, message = "Chat title length can`t be less than 3 or more than 30 symbols")
     private String title;
-
     @Column(unique = true)
     @Size(min = 10, max = 30, message = "Chat code length can`t be less than 10 or more than 30 symbols")
     private String code;
@@ -30,10 +25,7 @@ public class Chat {
     @OneToMany(mappedBy = "chat")
     private Set<ChatUser> chatUser = new HashSet<>();
 
-    public static final int CODE_LENGTH = 10;
-
-    public Chat(String title) {
-        this.title = title;
+    public Chat() {
     }
 
     @Override
@@ -42,9 +34,6 @@ public class Chat {
                 ", title='" + title + '\'' +
                 ", code='" + code + '\'' +
                 '}';
-    }
-
-    public Chat() {
     }
 
     public UUID getId() {
