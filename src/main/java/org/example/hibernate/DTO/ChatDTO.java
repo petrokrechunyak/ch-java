@@ -10,8 +10,7 @@ public class ChatDTO {
 
     private String code;
 
-    public ChatDTO() {
-    }
+    private int members;
 
     public UUID getId() {
         return id;
@@ -37,4 +36,11 @@ public class ChatDTO {
         this.code = code;
     }
 
+    public int getMembers() {
+        return members;
+    }
+
+    public void setMembers(int members) {
+        this.members = members;
+    }
 }

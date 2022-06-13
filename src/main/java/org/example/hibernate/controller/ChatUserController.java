@@ -32,4 +32,12 @@ public class ChatUserController {
         return chatUserService.save(chatUserDTO);
     }
 
+    @GetMapping("/byChatAndUser")
+    public ChatUserDTO getByChatAndUser(@RequestParam String chat, @RequestParam String user){
+        return chatUserService.chatUserByChatAndUser(
+                chat,
+                UUID.fromString(user)
+        );
+    }
+
 }

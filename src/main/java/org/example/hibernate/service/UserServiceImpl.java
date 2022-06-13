@@ -1,14 +1,17 @@
 package org.example.hibernate.service;
 
 import org.example.hibernate.DAO.UserDao;
+import org.example.hibernate.DTO.ChatDTO;
 import org.example.hibernate.DTO.UserDTO;
+import org.example.hibernate.DTO.UserWithChatsDTO;
 import org.example.hibernate.mapper.UserMapper;
+import org.example.hibernate.model.ChatUser;
 import org.example.hibernate.model.User;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -52,5 +55,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO deleteById(UUID id) {
        return userMapper.userToUserDTO(userDao.deleteById(id));
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public User chatsByUserId(UUID id) {
+        User user = userDao.findById(id);
+        Set<ChatUser> chatUsers = new HashSet<>();
+        Hibernate.initialize(chatUsers);
+        user.setChatUser(chatUsers);
+        return user;
     }
 }

@@ -52,4 +52,16 @@ public class ChatUserServiceImpl implements ChatUserService {
     public ChatUserDTO deleteById(UUID id) {
         return chatUserMapper.chatUserToChatUserDTO(chatUserDao.deleteById(id));
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<ChatUser> chatsByUserId(UUID id) {
+        return chatUserDao.chatsByUserId(id);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public ChatUserDTO chatUserByChatAndUser(String chatId, UUID userId) {
+        return chatUserMapper.chatUserToChatUserDTO(chatUserDao.chatUserByChatAndUser(chatId, userId));
+    }
 }

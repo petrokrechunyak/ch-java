@@ -18,6 +18,10 @@ public class User {
     @Column(unique = true)
     @Size(min = 5, max = 20, message = "Username length can`t be less than 5 or more than 20 symbols")
     private String username;
+
+    @NotBlank
+    private String imgurl;
+
     @NotBlank
     @Size(min = 6, message = "Password length can`t be less than 6 symbols")
     @Size(max = 30, message = "Password length can`t be more than 30 symbols")
@@ -64,6 +68,14 @@ public class User {
 
     public void setChatUser(Set<ChatUser> chatUser) {
         this.chatUser = chatUser;
+    }
+
+    public String getImgurl() {
+        return imgurl;
+    }
+
+    public void setImgurl(String imgURL) {
+        this.imgurl = imgURL;
     }
 
     @Override

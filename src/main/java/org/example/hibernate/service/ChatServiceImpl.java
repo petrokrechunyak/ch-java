@@ -28,8 +28,8 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public ChatDTO save(ChatDTO chatDTO) {
         chatDTO.setCode(generateCode());
-        chatDao.save(chatMapper.chatDTOToChat(chatDTO));
-        return chatDTO;
+        Chat forReturn = chatDao.save(chatMapper.chatDTOToChat(chatDTO));
+        return chatMapper.chatToChatDTO(forReturn);
     }
 
     @Transactional
@@ -43,11 +43,6 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public ChatDTO deleteById(UUID id) {
         return chatMapper.chatToChatDTO(chatDao.deleteById(id));
-    }
-
-    public Chat chatWithMessages(UUID id) {
-//        Chat chat = findById(id);
-return new Chat();
     }
 
     @Transactional

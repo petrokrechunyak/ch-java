@@ -2,6 +2,7 @@ package org.example.hibernate.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,11 +23,11 @@ public class Chat {
     @Size(min = 10, max = 30, message = "Chat code length can`t be less than 10 or more than 30 symbols")
     private String code;
 
+    @NotNull
+    private int members;
+
     @OneToMany(mappedBy = "chat")
     private Set<ChatUser> chatUser = new HashSet<>();
-
-    public Chat() {
-    }
 
     @Override
     public String toString() {
@@ -58,6 +59,14 @@ public class Chat {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public int getMembers() {
+        return members;
+    }
+
+    public void setMembers(int members) {
+        this.members = members;
     }
 
     public Set<ChatUser> getChatUser() {

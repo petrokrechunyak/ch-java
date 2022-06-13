@@ -1,6 +1,7 @@
 package org.example.hibernate.mapper;
 
 import org.example.hibernate.DTO.UserDTO;
+import org.example.hibernate.DTO.UserWithChatsDTO;
 import org.example.hibernate.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -15,5 +16,7 @@ public interface UserMapper {
     User userDTOToUser(UserDTO userDTO);
 
     List<UserDTO> userToUserDTOList(List<User> userList);
+
+    UserWithChatsDTO usertoUserWithChatsDTO(User user);
 
 }

@@ -12,4 +12,10 @@ public class ChatDaoImpl extends AbstractDao<Chat> implements ChatDao {
                 .setParameter("chatCode", code)
                 .uniqueResult();
     }
+
+    @Override
+    public Chat save(Chat chat) {
+        super.save(chat);
+        return findByCode(chat.getCode());
+    }
 }

@@ -33,4 +33,13 @@ public class ChatUserDTO {
     public void setChatId(UUID chatId) {
         this.chatId = chatId;
     }
+
+    @Override
+    public String toString() {
+        return "ChatUserDTO{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", chatId=" + chatId +
+                '}';
+    }
 }

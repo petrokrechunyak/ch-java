@@ -11,6 +11,8 @@ public class ChatWithMessagesDTO {
 
     private String code;
 
+    private int members;
+
     private List<MessageDTO> messages;
 
     public UUID getId() {
@@ -43,5 +45,13 @@ public class ChatWithMessagesDTO {
 
     public void setMessages(List<MessageDTO> messages) {
         this.messages = messages;
+    }
+
+    public int getMembers() {
+        return members;
+    }
+
+    public void setMembers(int members) {
+        this.members = members;
     }
 }

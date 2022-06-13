@@ -36,14 +36,10 @@ public abstract class AbstractDao<T> implements BaseDao<T> {
         return t;
     }
 
-    public boolean deleteById(UUID id) {
-        try{
-            T t = findById(id);
-            getSession().delete(t);
-            return true;
-        } catch (IllegalArgumentException e){
-            return false;
-        }
+    public T deleteById(UUID id) {
+        T t = findById(id);
+        getSession().delete(t);
+        return t;
     }
 
     protected Session getSession() {
