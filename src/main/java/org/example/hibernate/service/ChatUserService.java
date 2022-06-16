@@ -12,4 +12,5 @@ public interface ChatUserService extends BaseService<ChatUserDTO> {
 
     ChatUserDTO chatUserByChatAndUser(String chatId, UUID userId);
 
+    List<ChatUser> usersByChatCode(String code);
 }

@@ -64,4 +64,10 @@ public class ChatUserServiceImpl implements ChatUserService {
     public ChatUserDTO chatUserByChatAndUser(String chatId, UUID userId) {
         return chatUserMapper.chatUserToChatUserDTO(chatUserDao.chatUserByChatAndUser(chatId, userId));
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<ChatUser> usersByChatCode(String code) {
+        return chatUserDao.usersByChatCode(code);
+    }
 }

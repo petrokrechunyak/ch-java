@@ -17,7 +17,7 @@ public class Chat {
     @GeneratedValue
     private UUID id;
     @NotBlank
-    @Size(min = 3, max = 30, message = "Chat title length can`t be less than 3 or more than 30 symbols")
+    @Size(max = 45, message = "Chat title length can`t be more than 45 symbols")
     private String title;
     @Column(unique = true)
     @Size(min = 10, max = 30, message = "Chat code length can`t be less than 10 or more than 30 symbols")

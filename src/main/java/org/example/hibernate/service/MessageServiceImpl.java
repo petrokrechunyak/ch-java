@@ -62,4 +62,10 @@ public class MessageServiceImpl implements MessageService{
     public List<MessageDTO> findByCode(String code) {
         return messageMapper.messageToMessageDTOList(messageDao.findByCode(code));
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<MessageDTO> findPageByCode(String code, int present) {
+        return messageMapper.messageToMessageDTOList(messageDao.findPageByCode(code, present));
+    }
 }

@@ -13,12 +13,19 @@ import java.util.*;
 public class MyExceptionHandler {
 
     @ExceptionHandler(value = {ConstraintViolationException.class})
-    protected ResponseEntity<Object> validation(ConstraintViolationException ex) {
+    protected ResponseEntity<Map<String, String>> validation(ConstraintViolationException ex) {
 
-        Map<String, String> error = new LinkedHashMap<>();
-        for (ConstraintViolation<?> o : ex.getConstraintViolations()) {
-            error.put(o.getPropertyPath().toString(), o.getMessage());
+        Map<String, String> errorMessage = new LinkedHashMap<>();
+        for (ConstraintViolation<?> error : ex.getConstraintViolations()) {
+            errorMessage.put(error.getPropertyPath().toString(), error.getMessage());
         }
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = {Exception.class})
+    protected ResponseEntity<Map<String, String>> anyErrror(Exception ex){
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

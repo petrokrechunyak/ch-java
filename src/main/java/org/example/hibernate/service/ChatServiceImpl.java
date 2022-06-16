@@ -35,7 +35,8 @@ public class ChatServiceImpl implements ChatService {
     @Transactional
     public ChatDTO update(ChatDTO chatDTO) {
         Chat chat = chatMapper.chatDTOToChat(chatDTO);
-        return chatMapper.chatToChatDTO(chat);
+        Chat updated = chatDao.update(chat);
+        return chatMapper.chatToChatDTO(updated);
     }
 
 

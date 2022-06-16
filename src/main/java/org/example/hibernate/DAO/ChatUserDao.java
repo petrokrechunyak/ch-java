@@ -11,4 +11,6 @@ public interface ChatUserDao extends BaseDao<ChatUser> {
     List<ChatUser> chatsByUserId(UUID id);
 
     ChatUser chatUserByChatAndUser(String chatcode, UUID userId);
+
+    List<ChatUser> usersByChatCode(String code);
 }

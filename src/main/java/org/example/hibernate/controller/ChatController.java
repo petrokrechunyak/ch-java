@@ -3,11 +3,18 @@ package org.example.hibernate.controller;
 import org.example.hibernate.DTO.ChatDTO;
 import org.example.hibernate.DTO.ChatWithMessagesDTO;
 import org.example.hibernate.DTO.MessageDTO;
+import org.example.hibernate.DTO.UserDTO;
 import org.example.hibernate.mapper.ChatMapper;
+import org.example.hibernate.mapper.UserMapper;
+import org.example.hibernate.model.Chat;
+import org.example.hibernate.model.User;
 import org.example.hibernate.service.ChatService;
+import org.example.hibernate.service.ChatUserService;
 import org.example.hibernate.service.MessageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +25,10 @@ public class ChatController {
     ChatService chatService;
     MessageService messageService;
     ChatMapper chatMapper;
+    @Autowired
+    ChatUserService chatUserService;
+    @Autowired
+    UserMapper userMapper;
 
     public ChatController(ChatService chatService, MessageService messageService, ChatMapper chatMapper) {
         this.chatService = chatService;
@@ -61,6 +72,10 @@ public class ChatController {
         chatService.deleteById(id);
     }
 
-
-
+    @GetMapping("{code}/users")
+    public List<UserDTO> usersByChatCode(@PathVariable String code){
+        List<User> users = new ArrayList<>();
+        chatUserService.usersByChatCode(code).forEach(x -> users.add(x.getUser()));
+        return userMapper.userToUserDTOList(users);
+    }
 }

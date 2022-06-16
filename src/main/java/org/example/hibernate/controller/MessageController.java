@@ -1,8 +1,11 @@
 package org.example.hibernate.controller;
 
+import org.example.hibernate.DAO.MessageDao;
 import org.example.hibernate.DTO.MessageDTO;
+import org.example.hibernate.model.Message;
 import org.example.hibernate.service.ChatUserService;
 import org.example.hibernate.service.MessageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,5 +49,9 @@ public class MessageController {
         messageService.deleteById(id);
     }
 
+    @GetMapping("/{code}/{present}")
+    public List<MessageDTO> getPageByCode(@PathVariable String code, @PathVariable int present){
+        return messageService.findPageByCode(code, present);
+    }
 
 }
