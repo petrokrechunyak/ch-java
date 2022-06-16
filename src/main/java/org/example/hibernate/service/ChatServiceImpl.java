@@ -2,64 +2,76 @@ package org.example.hibernate.service;
 
 import net.bytebuddy.utility.RandomString;
 import org.example.hibernate.DAO.ChatDao;
+import org.example.hibernate.DTO.ChatDTO;
+import org.example.hibernate.DTO.ChatWithMessagesDTO;
+import org.example.hibernate.mapper.ChatMapper;
 import org.example.hibernate.model.Chat;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-@Transactional
 public class ChatServiceImpl implements ChatService {
 
-    ChatDao chatDao;
+    private ChatDao chatDao;
+    private ChatMapper chatMapper;
 
-    public ChatServiceImpl(ChatDao chatDao){
+    public ChatServiceImpl(ChatDao chatDao, ChatMapper chatMapper) {
         this.chatDao = chatDao;
+        this.chatMapper = chatMapper;
+    }
+
+    @Transactional
+    @Override
+    public ChatDTO save(ChatDTO chatDTO) {
+        chatDTO.setCode(generateCode());
+        Chat forReturn = chatDao.save(chatMapper.chatDTOToChat(chatDTO));
+        return chatMapper.chatToChatDTO(forReturn);
+    }
+
+    @Transactional
+    public ChatDTO update(ChatDTO chatDTO) {
+        Chat chat = chatMapper.chatDTOToChat(chatDTO);
+        Chat updated = chatDao.update(chat);
+        return chatMapper.chatToChatDTO(updated);
+    }
+
+
+    @Transactional
+    @Override
+    public ChatDTO deleteById(UUID id) {
+        return chatMapper.chatToChatDTO(chatDao.deleteById(id));
+    }
+
+    @Transactional
+    @Override
+    public List<ChatDTO> findAll() {
+        return chatMapper.chatToChatDTOList(chatDao.findAll());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public ChatDTO findById(UUID id) {
+        return chatMapper.chatToChatDTO(chatDao.findById(id));
     }
 
     @Override
-    public Chat save(Chat chat) {
-        do {
-            chat.setCode(RandomString.make(Chat.CODE_LENGTH));
-        } while (findByCode(chat.getCode()) != null);
-        chatDao.save(chat);
-        return chat;
+    public ChatWithMessagesDTO findChatWithMessages(UUID id) {
+        Chat chat = chatDao.findById(id);
+
+        return null;
     }
 
-    public Chat update(Chat chat) {
-        chatDao.update(chat);
-        return chat;
-    }
-
+    @Transactional(readOnly = true)
     @Override
-    public void delete(Chat chat) {
-        chatDao.delete(chat);
+    public ChatDTO findByCode(String code) {
+        return chatMapper.chatToChatDTO(chatDao.findByCode(code));
     }
 
-    @Override
-    public void deleteById(UUID id) {
-        chatDao.deleteById(id);
-    }
-
-    @Override
-    public List<Chat> findAll() {
-        return chatDao.findAll();
-    }
-
-    @Override
-    public Chat findById(UUID id) {
-        return chatDao.findById(id);
-    }
-
-    @Override
-    public Chat usersByChatId(UUID id) {
-        return chatDao.usersByChatId(id);
-    }
-
-    @Override
-    public Chat findByCode(String code) {
-        return chatDao.findByCode(code);
+    private String generateCode() {
+        return new Date().getTime() + RandomString.make(5);
     }
 }
