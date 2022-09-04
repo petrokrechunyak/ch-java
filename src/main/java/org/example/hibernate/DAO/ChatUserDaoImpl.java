@@ -2,41 +2,32 @@ package org.example.hibernate.DAO;
 
 import org.example.hibernate.model.ChatUser;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class ChatUserDaoImpl extends AbstractDao<ChatUser> implements ChatUserDao{
-//    @Override
-//    public List<ChatUser> findAll() {
-//        return findAll();
-//    }
-//
-//    @Override
-//    public ChatUser findById(UUID id) {
-//        return findById(id);
-//    }
-//
-//    @Override
-//    public ChatUser save(ChatUser chatUser) {
-//        save(chatUser);
-//        return chatUser;
-//    }
-//
-//    @Override
-//    public ChatUser update(ChatUser chatUser) {
-//        update(chatUser);
-//        return chatUser;
-//    }
-//
-//    @Override
-//    public void delete(ChatUser chatUser) {
-//        delete(chatUser);
-//    }
-//
-//    @Override
-//    public void deleteById(UUID id) {
-//        deleteById(id);
-//    }
+public class ChatUserDaoImpl extends AbstractDao<ChatUser> implements ChatUserDao {
+
+    @Transactional
+    @Override
+    public List<ChatUser> chatsByUserId(UUID id) {
+        return (List<ChatUser>) getSession().createQuery("FROM ChatUser WHERE user.id=:id")
+                .setParameter("id", id).getResultList();
+    }
+
+    @Override
+    public ChatUser chatUserByChatAndUser(String chatcode, UUID userId) {
+        return (ChatUser) getSession().createQuery("FROM ChatUser WHERE user.id=:userid AND chat.code=:chatcode")
+                .setParameter("userid", userId)
+                .setParameter("chatcode", chatcode)
+                .uniqueResult();
+    }
+
+    @Override
+    public List<ChatUser> usersByChatCode(String code) {
+        return (List<ChatUser>) getSession().createQuery("FROM ChatUser WHERE chat.code=:code")
+                .setParameter("code", code).getResultList();
+    }
 }

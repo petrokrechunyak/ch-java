@@ -8,46 +8,42 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class AbstractDao<T>{
+public abstract class AbstractDao<T> implements BaseDao<T> {
 
     @Autowired
     SessionFactory sessionFactory;
 
     public Class<T> genericClass() {
-        return  (Class<T>) ((ParameterizedType) getClass()
+        return (Class<T>) ((ParameterizedType) getClass()
                 .getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
-    public T findById(UUID id){
+    public T findById(UUID id) {
         return getSession().get(genericClass(), id);
     }
 
-    public List<T> findAll(){
-        return getSession().createQuery("FROM " + genericClass().getName(), genericClass()).list();
+    public List<T> findAll() {
+        return getSession().createQuery("FROM " + genericClass().getName(), genericClass()).getResultList();
     }
 
-    public T save(T t){
+    public T save(T t) {
         getSession().save(t);
         return t;
     }
 
-    public T update(T t){
+    public T update(T t) {
         getSession().merge(t);
         return t;
     }
 
-    public void delete(T t){
+    public T deleteById(UUID id) {
+        T t = findById(id);
         getSession().delete(t);
-
+        return t;
     }
 
-    public void deleteById(UUID id){
-        getSession().delete(findById(id));
-
-    }
-
-    protected Session getSession(){
-            return sessionFactory.getCurrentSession();
+    protected Session getSession() {
+        return sessionFactory.getCurrentSession();
     }
 
 }

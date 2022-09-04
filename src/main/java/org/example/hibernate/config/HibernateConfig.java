@@ -17,23 +17,23 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource(value = { "classpath:application.properties" })
+@PropertySource(value = {"classpath:application.properties"})
 @ComponentScan(basePackages = "org.example.hibernate")
 public class HibernateConfig {
 
     public Environment env;
 
-    public HibernateConfig(Environment env){
+    public HibernateConfig(Environment env) {
         this.env = env;
     }
 
     @Bean
-    public LocalSessionFactoryBean sessionFactoryBean(){
+    public LocalSessionFactoryBean sessionFactoryBean() {
         LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
         sessionFactoryBean.setDataSource(dataSource());
         sessionFactoryBean.setPackagesToScan("org.example.hibernate.model");
         sessionFactoryBean.setHibernateProperties(getProperies());
-        return  sessionFactoryBean;
+        return sessionFactoryBean;
     }
 
     @Bean
@@ -48,13 +48,13 @@ public class HibernateConfig {
 
     @Bean
     @Autowired
-    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory){
+    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();
         transactionManager.setSessionFactory(sessionFactory);
-        return  transactionManager;
+        return transactionManager;
     }
 
-    private Properties getProperies(){
+    private Properties getProperies() {
         Properties properties = new Properties();
         properties.put("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
         properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
